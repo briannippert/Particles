@@ -26,9 +26,8 @@ public class GUI implements KeyListener, Runnable {
 	double _gravity = 1;
 	double _windResistance = 1;
 	Random _rand;
-	static int _MAXPARTICLES = 10000;
+	static int _MAXPARTICLES = 500;
 
-	// TEST GITHUB COMMENT
 	/**
 	 * Constructor for GUI Class
 	 */
@@ -72,7 +71,7 @@ public class GUI implements KeyListener, Runnable {
 						|| MouseInfo.getPointerInfo().getLocation().y < 0) {
 					return;
 				}
-				for (int i = 0; i < 50; i++) {
+				for (int i = 0; i < 10; i++) {
 					double velx = _rand.nextInt(18) - 9;
 					double vely = _rand.nextInt(15) - 15;
 					int mouseX = MouseInfo.getPointerInfo().getLocation().x - 15;
@@ -105,6 +104,7 @@ public class GUI implements KeyListener, Runnable {
 		while (true) {
 			try {
 				Thread.sleep(25);
+				System.out.println(_particles1.size());
 				synchronized (_particles1) {
 					Iterator i = _particles1.iterator();
 					while (i.hasNext()) {
@@ -117,8 +117,9 @@ public class GUI implements KeyListener, Runnable {
 						}
 						p.changeYVelocity((int) _gravity);
 						p.move();
-						if (p.getYLocation() >= Frame.getHeight() - 10) {
+						if (p.getYLocation() >= Frame.getHeight() + 20) {
 							p = null;
+							i.remove();
 							// p.setOnGround(true);
 						}
 					}
