@@ -13,6 +13,7 @@ import java.util.Random;
 
 import wheelsunh.users.Frame;
 import wheelsunh.users.Line;
+import wheelsunh.users.Rectangle;
 
 /**
  * GUI implements a particle fountain.
@@ -41,10 +42,12 @@ public class GUI implements KeyListener, Runnable {
 		_particles3 = Collections.synchronizedList(new ArrayList());
 		_particles4 = Collections.synchronizedList(new ArrayList());
 		_f1.addKeyListener(this);
-		Line vertLine = new Line(Frame.getWidth() / 2, 0, Frame.getWidth() / 2, Frame.getHeight());
-		Line horzLine = new Line(0, Frame.getHeight() / 2, Frame.getWidth(), Frame.getHeight() / 2);
-		vertLine.setColor(Color.BLACK);
-		horzLine.setColor(Color.BLACK);
+		// Line vertLine = new Line(Frame.getWidth() / 2, 0, Frame.getWidth() /
+		// 2, Frame.getHeight());
+		// Line horzLine = new Line(0, Frame.getHeight() / 2, Frame.getWidth(),
+		// Frame.getHeight() / 2);
+		// vertLine.setColor(Color.BLACK);
+		// horzLine.setColor(Color.BLACK);
 		this.run();
 	}
 
@@ -96,6 +99,42 @@ public class GUI implements KeyListener, Runnable {
 
 	}
 
+	public void assignParticleGroups(List Particles) {
+		// Group 1 (0,0)-(ScreenWidth/2,ScreenHeight/2)
+		// Group 2 (ScreenWidth/2, 0)-(screeenWidth, screenHeight/2)
+		// Group 3 (0,ScreenHeight/2)-(screenWidth/2,screenHeight)
+		// Group 4 (ScreenWidth/2,ScreenHeight/2)-(screenWidth, ScreenHeight)
+		Rectangle r1, r2, r3, r4;
+		r1 = new Rectangle();
+		r1.setLocation(0, 0);
+		r1.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		r1.setFillColor(new Color(0, 0, 0, 0));
+		r1.setFrameColor(Color.BLACK);
+		r2 = new Rectangle();
+		r2.setLocation(Frame.getWidth() / 2, 0);
+		r2.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		r2.setFillColor(new Color(0, 0, 0, 0));
+		r2.setFrameColor(Color.RED);
+		r3 = new Rectangle();
+		r3.setLocation(0, Frame.getHeight() / 2);
+		r3.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		r3.setFillColor(new Color(0, 0, 0, 0));
+		r3.setFrameColor(Color.GREEN);
+		r4 = new Rectangle();
+		r4.setLocation(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		r4.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		r4.setFillColor(new Color(0, 0, 0, 0));
+		r4.setFrameColor(Color.BLUE);
+		synchronized (Particles) {
+			Iterator i = _particles1.iterator();
+			while (i.hasNext()) {
+				Particle p = (Particle) i.next();
+				Point nextPos = p.nextLocation();
+				//// if()
+			}
+		}
+	}
+
 	/**
 	 * Runing method for the thread
 	 */
@@ -103,6 +142,7 @@ public class GUI implements KeyListener, Runnable {
 	public void run() {
 
 		while (true) {
+			assignParticleGroups(_particles1);
 			try {
 				Thread.sleep(25);
 				synchronized (_particles1) {
