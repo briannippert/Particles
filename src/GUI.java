@@ -28,6 +28,7 @@ public class GUI implements KeyListener, Runnable {
 	double _windResistance = 1;
 	Random _rand;
 	static int _MAXPARTICLES = 500;
+	Rectangle _r1, _r2, _r3, _r4;
 
 	/**
 	 * Constructor for GUI Class
@@ -73,13 +74,29 @@ public class GUI implements KeyListener, Runnable {
 						|| MouseInfo.getPointerInfo().getLocation().y < 0) {
 					return;
 				}
+				int mouseX = MouseInfo.getPointerInfo().getLocation().x - 20;
+				int mouseY = MouseInfo.getPointerInfo().getLocation().y - 40;
+				Point mouse = new Point(mouseX, mouseY);
 				for (int i = 0; i < 10; i++) {
 					double velx = _rand.nextInt(18) - 9;
 					double vely = _rand.nextInt(15) - 15;
-					int mouseX = MouseInfo.getPointerInfo().getLocation().x - 15;
-					int mouseY = MouseInfo.getPointerInfo().getLocation().y - 40;
 					
-					_particles1.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+					if (_r1.contains(mouse)) {
+						_particles1.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+						continue;
+					}
+					if (_r2.contains(mouse)) {
+						_particles2.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+						continue;
+					}
+					if (_r3.contains(mouse)) {
+						_particles3.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+						continue;
+					}
+					if (_r4.contains(mouse)) {
+						_particles4.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+						continue;
+					}
 				}
 
 			} catch (Exception ex) {
@@ -120,49 +137,49 @@ public class GUI implements KeyListener, Runnable {
 		// Group 2 (ScreenWidth/2, 0)-(screeenWidth, screenHeight/2)
 		// Group 3 (0,ScreenHeight/2)-(screenWidth/2,screenHeight)
 		// Group 4 (ScreenWidth/2,ScreenHeight/2)-(screenWidth, ScreenHeight)
-		Rectangle r1, r2, r3, r4;
-		r1 = new Rectangle();
-		r1.setLocation(0, 0);
-		r1.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		r1.setFillColor(new Color(0, 0, 0, 0));
-		r1.setFrameColor(Color.BLACK);
-		r2 = new Rectangle();
-		r2.setLocation(Frame.getWidth() / 2, 0);
-		r2.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		r2.setFillColor(new Color(0, 0, 0, 0));
-		r2.setFrameColor(Color.RED);
-		r3 = new Rectangle();
-		r3.setLocation(0, Frame.getHeight() / 2);
-		r3.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		r3.setFillColor(new Color(0, 0, 0, 0));
-		r3.setFrameColor(Color.GREEN);
-		r4 = new Rectangle();
-		r4.setLocation(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		r4.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		r4.setFillColor(new Color(0, 0, 0, 0));
-		r4.setFrameColor(Color.BLUE);
+
+		_r1 = new Rectangle();
+		_r1.setLocation(0, 0);
+		_r1.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		_r1.setFillColor(new Color(0, 0, 0, 0));
+		_r1.setFrameColor(Color.BLACK);
+		_r2 = new Rectangle();
+		_r2.setLocation(Frame.getWidth() / 2, 0);
+		_r2.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		_r2.setFillColor(new Color(0, 0, 0, 0));
+		_r2.setFrameColor(Color.RED);
+		_r3 = new Rectangle();
+		_r3.setLocation(0, Frame.getHeight() / 2);
+		_r3.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		_r3.setFillColor(new Color(0, 0, 0, 0));
+		_r3.setFrameColor(Color.GREEN);
+		_r4 = new Rectangle();
+		_r4.setLocation(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		_r4.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		_r4.setFillColor(new Color(0, 0, 0, 0));
+		_r4.setFrameColor(Color.BLUE);
 		try {
 			synchronized (Particles) {
 				Iterator i = _particles1.iterator();
 				while (i.hasNext()) {
 					Particle p = (Particle) i.next();
 					Point nextPos = p.nextLocation();
-					if (r1.contains(nextPos)) {
+					if (_r1.contains(nextPos)) {
 						_particles1.add(p);
 						i.remove();
 						return;
 					}
-					if (r2.contains(nextPos)) {
+					if (_r2.contains(nextPos)) {
 						_particles2.add(p);
 						i.remove();
 						return;
 					}
-					if (r3.contains(nextPos)) {
-						_particles2.add(p);
+					if (_r3.contains(nextPos)) {
+						_particles3.add(p);
 						i.remove();
 						return;
 					}
-					if (r4.contains(nextPos)) {
+					if (_r4.contains(nextPos)) {
 						_particles4.add(p);
 						i.remove();
 						return;
