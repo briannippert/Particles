@@ -26,6 +26,7 @@ public class GUI implements KeyListener, Runnable {
 	double _gravity = 1;
 	double _windResistance = 1;
 	Random _rand;
+	static int _MAXPARTICLES = 10000;
 
 	// TEST GITHUB COMMENT
 	/**
@@ -60,6 +61,9 @@ public class GUI implements KeyListener, Runnable {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyChar() == ' ') {
+			if (_particles1.size() >= _MAXPARTICLES) {
+				return;
+			}
 			try {
 				Thread.sleep(5);
 				if (MouseInfo.getPointerInfo().getLocation().x > _f1.getWidth()
@@ -97,10 +101,10 @@ public class GUI implements KeyListener, Runnable {
 	 */
 	@Override
 	public void run() {
+
 		while (true) {
 			try {
-				Thread.sleep(15);
-				// System.out.println(_particles1.size());
+				Thread.sleep(25);
 				synchronized (_particles1) {
 					Iterator i = _particles1.iterator();
 					while (i.hasNext()) {
@@ -114,8 +118,8 @@ public class GUI implements KeyListener, Runnable {
 						p.changeYVelocity((int) _gravity);
 						p.move();
 						if (p.getYLocation() >= Frame.getHeight() - 10) {
-							// p = null;
-							p.setOnGround(true);
+							p = null;
+							// p.setOnGround(true);
 						}
 					}
 				}
