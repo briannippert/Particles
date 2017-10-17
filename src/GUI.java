@@ -116,19 +116,19 @@ public class GUI implements KeyListener, Runnable {
 	}
 
 	public void assignParticleGroups(int ListNum) {
-		List Particles = null;
+		List particles = null;
 		switch (ListNum) {
 		case 1:
-			Particles = _particles1;
+			particles = _particles1;
 			break;
 		case 2:
-			Particles = _particles2;
+			particles = _particles2;
 			break;
 		case 3:
-			Particles = _particles3;
+			particles = _particles3;
 			break;
 		case 4:
-			Particles = _particles4;
+			particles = _particles4;
 			break;
 		default:
 			return;
@@ -159,8 +159,8 @@ public class GUI implements KeyListener, Runnable {
 		_r4.setFillColor(new Color(0, 0, 0, 0));
 		_r4.setFrameColor(Color.BLUE);
 		try {
-			synchronized (Particles) {
-				Iterator i = _particles1.iterator();
+			synchronized (particles) {
+				Iterator i = particles.iterator();
 				while (i.hasNext()) {
 					Particle p = (Particle) i.next();
 					Point nextPos = p.nextLocation();
@@ -187,7 +187,7 @@ public class GUI implements KeyListener, Runnable {
 				}
 			}
 		} catch (Exception ex) {
-
+		//	ex.printStackTrace();
 		}
 
 	}
@@ -239,7 +239,7 @@ public class GUI implements KeyListener, Runnable {
 
 		while (true) {
 			try {
-				Thread.sleep(25);
+				Thread.sleep(30);
 				assignParticleGroups(1);
 				assignParticleGroups(2);
 				assignParticleGroups(3);
