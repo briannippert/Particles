@@ -21,15 +21,13 @@ import wheelsunh.users.Line;
  *
  */
 public class GUI implements KeyListener, Runnable {
-	AnimationTimer _timer;
 	Frame _f1;
 	public List<Particle> _particles1, _particles2, _particles3, _particles4;
 	double _gravity = 1;
 	double _windResistance = 1;
 	Random _rand;
 
-	
-	//TEST GITHUB COMMENT
+	// TEST GITHUB COMMENT
 	/**
 	 * Constructor for GUI Class
 	 */
