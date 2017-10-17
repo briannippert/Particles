@@ -27,6 +27,7 @@ public class GUI implements KeyListener, Runnable {
 	double _gravity = 1;
 	double _windResistance = 1;
 	Random _rand;
+	static int _MAXPARTICLES = 500;
 
 	/**
 	 * Constructor for GUI Class
@@ -72,10 +73,12 @@ public class GUI implements KeyListener, Runnable {
 						|| MouseInfo.getPointerInfo().getLocation().y < 0) {
 					return;
 				}
+				for (int i = 0; i < 10; i++) {
 					double velx = _rand.nextInt(18) - 9;
 					double vely = _rand.nextInt(15) - 15;
 					int mouseX = MouseInfo.getPointerInfo().getLocation().x - 15;
 					int mouseY = MouseInfo.getPointerInfo().getLocation().y - 40;
+					
 					_particles1.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
 				}
 
@@ -95,7 +98,24 @@ public class GUI implements KeyListener, Runnable {
 
 	}
 
-	public void assignParticleGroups(List Particles) {
+	public void assignParticleGroups(int ListNum) {
+		List Particles = null;
+		switch (ListNum) {
+		case 1:
+			Particles = _particles1;
+			break;
+		case 2:
+			Particles = _particles2;
+			break;
+		case 3:
+			Particles = _particles3;
+			break;
+		case 4:
+			Particles = _particles4;
+			break;
+		default:
+			return;
+		}
 		// Group 1 (0,0)-(ScreenWidth/2,ScreenHeight/2)
 		// Group 2 (ScreenWidth/2, 0)-(screeenWidth, screenHeight/2)
 		// Group 3 (0,ScreenHeight/2)-(screenWidth/2,screenHeight)
@@ -121,12 +141,75 @@ public class GUI implements KeyListener, Runnable {
 		r4.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
 		r4.setFillColor(new Color(0, 0, 0, 0));
 		r4.setFrameColor(Color.BLUE);
-		synchronized (Particles) {
-			Iterator i = _particles1.iterator();
+		try {
+			synchronized (Particles) {
+				Iterator i = _particles1.iterator();
+				while (i.hasNext()) {
+					Particle p = (Particle) i.next();
+					Point nextPos = p.nextLocation();
+					if (r1.contains(nextPos)) {
+						_particles1.add(p);
+						i.remove();
+						return;
+					}
+					if (r2.contains(nextPos)) {
+						_particles2.add(p);
+						i.remove();
+						return;
+					}
+					if (r3.contains(nextPos)) {
+						_particles2.add(p);
+						i.remove();
+						return;
+					}
+					if (r4.contains(nextPos)) {
+						_particles4.add(p);
+						i.remove();
+						return;
+					}
+				}
+			}
+		} catch (Exception ex) {
+
+		}
+
+	}
+
+	public void moveParticles(int num) {
+		List particles = null;
+		switch (num) {
+		case 1:
+			particles = _particles1;
+			break;
+		case 2:
+			particles = _particles2;
+			break;
+		case 3:
+			particles = _particles3;
+			break;
+		case 4:
+			particles = _particles4;
+			break;
+		default:
+			return;
+		}
+		synchronized (particles) {
+			Iterator i = particles.iterator();
 			while (i.hasNext()) {
 				Particle p = (Particle) i.next();
-				Point nextPos = p.nextLocation();
-				//// if()
+				if (p.getXLocation() <= 5 || p.getXLocation() >= Frame.getWidth() - 5) {
+					p.setXVelocity(-p.getVelocity().x);
+				}
+				if (p.getYLocation() <= 0) {
+					p.setYVelocity(-p.getVelocity().y);
+				}
+				p.changeYVelocity((int) _gravity);
+				p.move();
+				if (p.getYLocation() >= Frame.getHeight() + 20) {
+					p = null;
+					i.remove();
+					// p.setOnGround(true);
+				}
 			}
 		}
 	}
@@ -138,26 +221,21 @@ public class GUI implements KeyListener, Runnable {
 	public void run() {
 
 		while (true) {
-			assignParticleGroups(_particles1);
 			try {
 				Thread.sleep(25);
-				synchronized (_particles1) {
-					Iterator i = _particles1.iterator();
-					while (i.hasNext()) {
-						Particle p = (Particle) i.next();
-						if (p.getXLocation() <= 5 || p.getXLocation() >= Frame.getWidth() - 5) {
-							p.setXVelocity(-p.getVelocity().x);
-						}
-						if (p.getYLocation() <= 0) {
-							p.setYVelocity(-p.getVelocity().y);
-						}
-						p.changeYVelocity((int) _gravity);
-						p.move();
-							p = null;
-							// p.setOnGround(true);
-						}
-					}
-				}
+				assignParticleGroups(1);
+				assignParticleGroups(2);
+				assignParticleGroups(3);
+				assignParticleGroups(4);
+				moveParticles(1);
+				moveParticles(2);
+				moveParticles(3);
+				moveParticles(4);
+				System.out.flush();
+				System.out.println("Group 1: " + _particles1.size());
+				System.out.println("Group 2: " + _particles2.size());
+				System.out.println("Group 3: " + _particles3.size());
+				System.out.println("Group 4: " + _particles4.size());
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
