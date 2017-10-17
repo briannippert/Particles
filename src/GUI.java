@@ -64,7 +64,6 @@ public class GUI implements KeyListener, Runnable {
 				return;
 			}
 			try {
-				//Thread.sleep(5);
 				if (MouseInfo.getPointerInfo().getLocation().x > _f1.getWidth()
 						|| MouseInfo.getPointerInfo().getLocation().y > _f1.getHeight()
 						|| MouseInfo.getPointerInfo().getLocation().x < 0
