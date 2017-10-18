@@ -75,6 +75,7 @@ public class GUI implements KeyListener, Runnable {
 		t2.start();
 		t3.start();
 		t4.start();
+		run();
 	}
 
 	/**
@@ -106,23 +107,32 @@ public class GUI implements KeyListener, Runnable {
 				for (int i = 0; i < _EMITERRATE; i++) {
 					double velx = _rand.nextInt(18) - 9;
 					double vely = _rand.nextInt(15) - 15;
+					synchronized (_particles1) {
 
-					if (_r1.contains(mouse)) {
-						_particles1.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
-						continue;
+						if (_r1.contains(mouse)) {
+							_particles1.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							continue;
+						}
 					}
-					if (_r2.contains(mouse)) {
-						_particles2.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
-						continue;
+					synchronized (_particles2) {
+						if (_r2.contains(mouse)) {
+							_particles2.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							continue;
+						}
 					}
-					if (_r3.contains(mouse)) {
-						_particles3.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
-						continue;
+					synchronized (_particles3) {
+						if (_r3.contains(mouse)) {
+							_particles3.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							continue;
+						}
 					}
-					if (_r4.contains(mouse)) {
-						_particles4.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
-						continue;
+					synchronized (_particles4) {
+						if (_r4.contains(mouse)) {
+							_particles4.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							continue;
+						}
 					}
+
 				}
 
 			} catch (Exception ex) {
@@ -164,7 +174,6 @@ public class GUI implements KeyListener, Runnable {
 		// Group 3 (0,ScreenHeight/2)-(screenWidth/2,screenHeight)
 		// Group 4 (ScreenWidth/2,ScreenHeight/2)-(screenWidth, ScreenHeight)
 
-	
 		try {
 			synchronized (particles) {
 				Iterator i = particles.iterator();
@@ -288,10 +297,10 @@ public class GUI implements KeyListener, Runnable {
 		public void run() {
 			while (true) {
 				try {
-					Thread.sleep(30);
+					Thread.sleep(16);
 					assignParticleGroups(listNum);
 					moveParticles(listNum);
-				} catch (InterruptedException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
