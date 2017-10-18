@@ -42,12 +42,6 @@ public class GUI implements KeyListener, Runnable {
 		_particles3 = Collections.synchronizedList(new ArrayList());
 		_particles4 = Collections.synchronizedList(new ArrayList());
 		_f1.addKeyListener(this);
-		// Line vertLine = new Line(Frame.getWidth() / 2, 0, Frame.getWidth() /
-		// 2, Frame.getHeight());
-		// Line horzLine = new Line(0, Frame.getHeight() / 2, Frame.getWidth(),
-		// Frame.getHeight() / 2);
-		// vertLine.setColor(Color.BLACK);
-		// horzLine.setColor(Color.BLACK);
 		this.run();
 	}
 
