@@ -27,8 +27,11 @@ public class GUI implements KeyListener, Runnable {
 	double _gravity = 1;
 	double _windResistance = 1;
 	Random _rand;
-	static int _MAXPARTICLES = 500;
+	
 	Rectangle _r1, _r2, _r3, _r4;
+	
+	static int _MAXPARTICLES = 500;
+	static int _EMITERRATE = 10;
 
 	/**
 	 * Constructor for GUI Class
@@ -71,7 +74,7 @@ public class GUI implements KeyListener, Runnable {
 				int mouseX = MouseInfo.getPointerInfo().getLocation().x - 20;
 				int mouseY = MouseInfo.getPointerInfo().getLocation().y - 40;
 				Point mouse = new Point(mouseX, mouseY);
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < _EMITERRATE; i++) {
 					double velx = _rand.nextInt(18) - 9;
 					double vely = _rand.nextInt(15) - 15;
 
@@ -158,22 +161,22 @@ public class GUI implements KeyListener, Runnable {
 				while (i.hasNext()) {
 					Particle p = (Particle) i.next();
 					Point nextPos = p.nextLocation();
-					if (_r1.contains(nextPos)) {
+					if (_r1.contains(nextPos) && ListNum != 1) {
 						_particles1.add(p);
 						i.remove();
 						return;
 					}
-					if (_r2.contains(nextPos)) {
+					if (_r2.contains(nextPos) && ListNum != 2) {
 						_particles2.add(p);
 						i.remove();
 						return;
 					}
-					if (_r3.contains(nextPos)) {
+					if (_r3.contains(nextPos) && ListNum != 3) {
 						_particles3.add(p);
 						i.remove();
 						return;
 					}
-					if (_r4.contains(nextPos)) {
+					if (_r4.contains(nextPos) && ListNum != 4) {
 						_particles4.add(p);
 						i.remove();
 						return;
@@ -181,7 +184,7 @@ public class GUI implements KeyListener, Runnable {
 				}
 			}
 		} catch (Exception ex) {
-			// ex.printStackTrace();
+			 ex.printStackTrace();
 		}
 
 	}

@@ -31,7 +31,7 @@ public class Particle extends Ellipse {
 		Random r1 = new Random();
 		this.setSize(10, 10);
 		this.setLocation(location);
-		this.setColor(new Color(r1.nextInt(255), r1.nextInt(255), r1.nextInt(255), r1.nextInt(255)));
+		this.setColor(new Color(0, r1.nextInt(255), r1.nextInt(255), r1.nextInt(255)));
 	}
 
 	/**
