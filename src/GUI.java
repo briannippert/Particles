@@ -27,9 +27,9 @@ public class GUI implements KeyListener, Runnable {
 	double _gravity = 1;
 	double _windResistance = 1;
 	Random _rand;
-	
+
 	Rectangle _r1, _r2, _r3, _r4;
-	
+
 	static int _MAXPARTICLES = 500;
 	static int _EMITERRATE = 10;
 
@@ -45,7 +45,36 @@ public class GUI implements KeyListener, Runnable {
 		_particles3 = Collections.synchronizedList(new ArrayList());
 		_particles4 = Collections.synchronizedList(new ArrayList());
 		_f1.addKeyListener(this);
-		this.run();
+		// this.run();
+		_r1 = new Rectangle();
+		_r1.setLocation(0, 0);
+		_r1.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		_r1.setFillColor(new Color(0, 0, 0, 0));
+		_r1.setFrameColor(Color.BLACK);
+		_r2 = new Rectangle();
+		_r2.setLocation(Frame.getWidth() / 2, 0);
+		_r2.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		_r2.setFillColor(new Color(0, 0, 0, 0));
+		_r2.setFrameColor(Color.RED);
+		_r3 = new Rectangle();
+		_r3.setLocation(0, Frame.getHeight() / 2);
+		_r3.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		_r3.setFillColor(new Color(0, 0, 0, 0));
+		_r3.setFrameColor(Color.GREEN);
+		_r4 = new Rectangle();
+		_r4.setLocation(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		_r4.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
+		_r4.setFillColor(new Color(0, 0, 0, 0));
+		_r4.setFrameColor(Color.BLUE);
+		Thread t1, t2, t3, t4;
+		t1 = new Thread(new ParticleWorker(1));
+		t2 = new Thread(new ParticleWorker(2));
+		t3 = new Thread(new ParticleWorker(3));
+		t4 = new Thread(new ParticleWorker(4));
+		t1.start();
+		t2.start();
+		t3.start();
+		t4.start();
 	}
 
 	/**
@@ -135,26 +164,7 @@ public class GUI implements KeyListener, Runnable {
 		// Group 3 (0,ScreenHeight/2)-(screenWidth/2,screenHeight)
 		// Group 4 (ScreenWidth/2,ScreenHeight/2)-(screenWidth, ScreenHeight)
 
-		_r1 = new Rectangle();
-		_r1.setLocation(0, 0);
-		_r1.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		_r1.setFillColor(new Color(0, 0, 0, 0));
-		_r1.setFrameColor(Color.BLACK);
-		_r2 = new Rectangle();
-		_r2.setLocation(Frame.getWidth() / 2, 0);
-		_r2.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		_r2.setFillColor(new Color(0, 0, 0, 0));
-		_r2.setFrameColor(Color.RED);
-		_r3 = new Rectangle();
-		_r3.setLocation(0, Frame.getHeight() / 2);
-		_r3.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		_r3.setFillColor(new Color(0, 0, 0, 0));
-		_r3.setFrameColor(Color.GREEN);
-		_r4 = new Rectangle();
-		_r4.setLocation(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		_r4.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		_r4.setFillColor(new Color(0, 0, 0, 0));
-		_r4.setFrameColor(Color.BLUE);
+	
 		try {
 			synchronized (particles) {
 				Iterator i = particles.iterator();
@@ -184,7 +194,7 @@ public class GUI implements KeyListener, Runnable {
 				}
 			}
 		} catch (Exception ex) {
-			 ex.printStackTrace();
+			ex.printStackTrace();
 		}
 
 	}
@@ -236,16 +246,15 @@ public class GUI implements KeyListener, Runnable {
 
 		while (true) {
 			try {
-				Thread.sleep(30);
-				assignParticleGroups(1);
-				assignParticleGroups(2);
-				assignParticleGroups(3);
-				assignParticleGroups(4);
-				moveParticles(1);
-				moveParticles(2);
-				moveParticles(3);
-				moveParticles(4);
-				System.out.flush();
+
+				// assignParticleGroups(1);
+				// assignParticleGroups(2);
+				// assignParticleGroups(3);
+				// assignParticleGroups(4);
+				// moveParticles(1);
+				// moveParticles(2);
+				// moveParticles(3);
+				// moveParticles(4);
 				System.out.println("Group 1: " + _particles1.size());
 				System.out.println("Group 2: " + _particles2.size());
 				System.out.println("Group 3: " + _particles3.size());
@@ -266,5 +275,27 @@ public class GUI implements KeyListener, Runnable {
 	 */
 	public static void main(String args[]) {
 		new GUI();
+	}
+
+	// Worker thread for particle multi threading
+	public class ParticleWorker implements Runnable {
+		int listNum;
+
+		public ParticleWorker(Object parameter) {
+			listNum = (int) parameter;
+		}
+
+		public void run() {
+			while (true) {
+				try {
+					Thread.sleep(30);
+					assignParticleGroups(listNum);
+					moveParticles(listNum);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
