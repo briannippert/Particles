@@ -151,7 +151,7 @@ public class GUI implements KeyListener, Runnable {
 
 	}
 
-	public void assignParticleGroups(int ListNum) {
+	public synchronized void assignParticleGroups(int ListNum) {
 		List particles = null;
 		switch (ListNum) {
 		case 1:
@@ -208,7 +208,7 @@ public class GUI implements KeyListener, Runnable {
 
 	}
 
-	public void moveParticles(int num) {
+	public synchronized void moveParticles(int num) {
 		List particles = null;
 		switch (num) {
 		case 1:
