@@ -80,7 +80,7 @@ public class GUI implements KeyListener, Runnable {
 				for (int i = 0; i < 10; i++) {
 					double velx = _rand.nextInt(18) - 9;
 					double vely = _rand.nextInt(15) - 15;
-					
+
 					if (_r1.contains(mouse)) {
 						_particles1.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
 						continue;
@@ -187,7 +187,7 @@ public class GUI implements KeyListener, Runnable {
 				}
 			}
 		} catch (Exception ex) {
-		//	ex.printStackTrace();
+			// ex.printStackTrace();
 		}
 
 	}
