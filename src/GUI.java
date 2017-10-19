@@ -14,6 +14,7 @@ import java.util.Random;
 import wheelsunh.users.Frame;
 import wheelsunh.users.Line;
 import wheelsunh.users.Rectangle;
+import wheelsunh.users.TextBox;
 
 /**
  * GUI implements a particle fountain.
@@ -29,9 +30,10 @@ public class GUI implements KeyListener, Runnable {
 	Random _rand;
 
 	Rectangle _r1, _r2, _r3, _r4;
+	TextBox _t1, _t2, _t3, _t4;
 
 	static int _MAXPARTICLES = 500;
-	static int _EMITERRATE = 30;
+	static int _EMITERRATE = 10;
 
 	/**
 	 * Constructor for GUI Class
@@ -44,6 +46,14 @@ public class GUI implements KeyListener, Runnable {
 		_particles2 = Collections.synchronizedList(new ArrayList());
 		_particles3 = Collections.synchronizedList(new ArrayList());
 		_particles4 = Collections.synchronizedList(new ArrayList());
+		_t1 = new TextBox();
+		_t1.setLocation(0, 0);
+		_t2 = new TextBox();
+		_t2.setLocation(Frame.getWidth() - _t2.getWidth(), 0);
+		_t3 = new TextBox();
+		_t3.setLocation(0, Frame.getHeight() - _t2.getHeight());
+		_t4 = new TextBox();
+		_t4.setLocation(Frame.getWidth() - _t2.getWidth(), Frame.getHeight() - _t2.getHeight());
 		_f1.addKeyListener(this);
 		// this.run();
 		_r1 = new Rectangle();
@@ -71,11 +81,13 @@ public class GUI implements KeyListener, Runnable {
 		t2 = new Thread(new ParticleWorker(2));
 		t3 = new Thread(new ParticleWorker(3));
 		t4 = new Thread(new ParticleWorker(4));
+		t5 = new Thread(new BallCounter());
 		t1.start();
 		t2.start();
 		t3.start();
 		t4.start();
-		run(); // Uncomment for Single Threaded operation
+		t5.start();
+		// run(); // Uncomment for Single Threaded operation
 	}
 
 	/**
@@ -101,14 +113,13 @@ public class GUI implements KeyListener, Runnable {
 						|| MouseInfo.getPointerInfo().getLocation().y < 0) {
 					return;
 				}
-				int mouseX = MouseInfo.getPointerInfo().getLocation().x - 20;
-				int mouseY = MouseInfo.getPointerInfo().getLocation().y - 40;
-				Point mouse = new Point(mouseX, mouseY);
 				for (int i = 0; i < _EMITERRATE; i++) {
+					int mouseX = MouseInfo.getPointerInfo().getLocation().x - 20;
+					int mouseY = MouseInfo.getPointerInfo().getLocation().y - 40;
+					Point mouse = new Point(mouseX, mouseY);
 					double velx = _rand.nextInt(18) - 9;
 					double vely = _rand.nextInt(15) - 15;
 					synchronized (_particles1) {
-
 						if (_r1.contains(mouse)) {
 							_particles1.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
 							continue;
@@ -255,7 +266,7 @@ public class GUI implements KeyListener, Runnable {
 
 		while (true) {
 			try {
-				// Thread.sleep(16);
+				Thread.sleep(16);
 				//
 				// assignParticleGroups(1);
 				// assignParticleGroups(2);
@@ -265,16 +276,20 @@ public class GUI implements KeyListener, Runnable {
 				// moveParticles(2);
 				// moveParticles(3);
 				// moveParticles(4);
-				System.out.println("Group 1: " + _particles1.size());
-				System.out.println("Group 2: " + _particles2.size());
-				System.out.println("Group 3: " + _particles3.size());
-				System.out.println("Group 4: " + _particles4.size());
+				displayBallCount();
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 
 		}
+	}
+
+	/**
+	 * Displays the count of the number of particles in the boxes.
+	 */
+	public void displayBallCount() {
+
 	}
 
 	/**
@@ -302,10 +317,35 @@ public class GUI implements KeyListener, Runnable {
 					assignParticleGroups(listNum);
 					moveParticles(listNum);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+					// TODO Auto-generated catch blocks
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+
+	/**
+	 * 
+	 * @author Brian
+	 *
+	 */
+	public class BallCounter implements Runnable {
+		public BallCounter() {
+
+		}
+
+		public void run() {
+			try {
+				while (true) {
+					_t1.setText(String.valueOf(_particles1.size()));
+					_t2.setText(String.valueOf(_particles2.size()));
+					_t3.setText(String.valueOf(_particles3.size()));
+					_t4.setText(String.valueOf(_particles4.size()));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
 }
