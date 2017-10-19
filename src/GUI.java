@@ -31,7 +31,7 @@ public class GUI implements KeyListener, Runnable {
 	Rectangle _r1, _r2, _r3, _r4;
 
 	static int _MAXPARTICLES = 500;
-	static int _EMITERRATE = 50;
+	static int _EMITERRATE = 30;
 
 	/**
 	 * Constructor for GUI Class
@@ -66,7 +66,7 @@ public class GUI implements KeyListener, Runnable {
 		_r4.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
 		_r4.setFillColor(new Color(0, 0, 0, 0));
 		_r4.setFrameColor(Color.BLUE);
-		Thread t1, t2, t3, t4;
+		Thread t1, t2, t3, t4, t5;
 		t1 = new Thread(new ParticleWorker(1));
 		t2 = new Thread(new ParticleWorker(2));
 		t3 = new Thread(new ParticleWorker(3));
@@ -75,7 +75,7 @@ public class GUI implements KeyListener, Runnable {
 		t2.start();
 		t3.start();
 		t4.start();
-		// run(); //Uncomment for Single Threaded operation
+		run(); // Uncomment for Single Threaded operation
 	}
 
 	/**
@@ -255,16 +255,16 @@ public class GUI implements KeyListener, Runnable {
 
 		while (true) {
 			try {
-				Thread.sleep(16);
-
-				assignParticleGroups(1);
-				assignParticleGroups(2);
-				assignParticleGroups(3);
-				assignParticleGroups(4);
-				moveParticles(1);
-				moveParticles(2);
-				moveParticles(3);
-				moveParticles(4);
+				// Thread.sleep(16);
+				//
+				// assignParticleGroups(1);
+				// assignParticleGroups(2);
+				// assignParticleGroups(3);
+				// assignParticleGroups(4);
+				// moveParticles(1);
+				// moveParticles(2);
+				// moveParticles(3);
+				// moveParticles(4);
 				System.out.println("Group 1: " + _particles1.size());
 				System.out.println("Group 2: " + _particles2.size());
 				System.out.println("Group 3: " + _particles3.size());
@@ -298,7 +298,7 @@ public class GUI implements KeyListener, Runnable {
 		public void run() {
 			while (true) {
 				try {
-					Thread.sleep(30);
+					Thread.sleep(16);
 					assignParticleGroups(listNum);
 					moveParticles(listNum);
 				} catch (Exception e) {
