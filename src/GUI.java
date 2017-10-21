@@ -25,22 +25,23 @@ import wheelsunh.users.TextBox;
 public class GUI implements KeyListener, Runnable {
 	Frame _f1;
 	public List<Particle> _particles1, _particles2, _particles3, _particles4;
-	double _gravity = 1;
-	double _windResistance = 1;
+	double _gravity = 2;
+	double _windResistance = 3;
 	Random _rand;
+	int _groupCounter = 1;
 
 	Rectangle _r1, _r2, _r3, _r4;
 	TextBox _t1, _t2, _t3, _t4;
 
 	static int _MAXPARTICLES = 500;
-	static int _EMITERRATE = 10;
+	static int _EMITERRATE = 100;
 
 	/**
 	 * Constructor for GUI Class
 	 */
 	@SuppressWarnings("unchecked")
 	public GUI() {
-		_f1 = new Frame();
+		_f1 = new Frame(1000, 1000);
 		_rand = new Random();
 		_particles1 = Collections.synchronizedList(new ArrayList());
 		_particles2 = Collections.synchronizedList(new ArrayList());
@@ -117,32 +118,66 @@ public class GUI implements KeyListener, Runnable {
 					int mouseX = MouseInfo.getPointerInfo().getLocation().x - 20;
 					int mouseY = MouseInfo.getPointerInfo().getLocation().y - 40;
 					Point mouse = new Point(mouseX, mouseY);
-					double velx = _rand.nextInt(18) - 9;
-					double vely = _rand.nextInt(15) - 15;
-					synchronized (_particles1) {
-						if (_r1.contains(mouse)) {
+					double velx = _rand.nextInt(36) - 18;
+					double vely = _rand.nextInt(30) - 30;
+					switch (_groupCounter) {
+					case 1:
+						synchronized (_particles1) {
 							_particles1.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							_groupCounter = 2;
 							continue;
 						}
-					}
-					synchronized (_particles2) {
-						if (_r2.contains(mouse)) {
+
+					case 2:
+						synchronized (_particles2) {
 							_particles2.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							_groupCounter = 3;
 							continue;
 						}
-					}
-					synchronized (_particles3) {
-						if (_r3.contains(mouse)) {
+
+					case 3:
+						synchronized (_particles3) {
 							_particles3.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							_groupCounter = 4;
 							continue;
 						}
-					}
-					synchronized (_particles4) {
-						if (_r4.contains(mouse)) {
+
+					case 4:
+						synchronized (_particles4) {
 							_particles4.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							_groupCounter = 1;
 							continue;
 						}
+
 					}
+					// synchronized (_particles1) {
+					// if (_r1.contains(mouse)) {
+					// _particles1.add(new Particle((int) velx, (int) vely, new
+					// Point(mouseX, mouseY)));
+					// continue;
+					// }
+					// }
+					// synchronized (_particles2) {
+					// if (_r2.contains(mouse)) {
+					// _particles2.add(new Particle((int) velx, (int) vely, new
+					// Point(mouseX, mouseY)));
+					// continue;
+					// }
+					// }
+					// synchronized (_particles3) {
+					// if (_r3.contains(mouse)) {
+					// _particles3.add(new Particle((int) velx, (int) vely, new
+					// Point(mouseX, mouseY)));
+					// continue;
+					// }
+					// }
+					// synchronized (_particles4) {
+					// if (_r4.contains(mouse)) {
+					// _particles4.add(new Particle((int) velx, (int) vely, new
+					// Point(mouseX, mouseY)));
+					// continue;
+					// }
+					// }
 
 				}
 
@@ -247,7 +282,8 @@ public class GUI implements KeyListener, Runnable {
 				if (p.getYLocation() <= 0) {
 					p.setYVelocity(-p.getVelocity().y);
 				}
-				p.changeYVelocity((int) _gravity);
+				p.changeYVelocity((int) (_gravity));
+
 				p.move();
 				if (p.getYLocation() >= Frame.getHeight() + 20) {
 					p = null;
@@ -314,7 +350,7 @@ public class GUI implements KeyListener, Runnable {
 			while (true) {
 				try {
 					Thread.sleep(16);
-					assignParticleGroups(listNum);
+					// assignParticleGroups(listNum);
 					moveParticles(listNum);
 				} catch (Exception e) {
 					// TODO Auto-generated catch blocks
@@ -337,6 +373,7 @@ public class GUI implements KeyListener, Runnable {
 		public void run() {
 			try {
 				while (true) {
+					Thread.sleep(5);
 					_t1.setText(String.valueOf(_particles1.size()));
 					_t2.setText(String.valueOf(_particles2.size()));
 					_t3.setText(String.valueOf(_particles3.size()));
