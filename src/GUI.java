@@ -29,7 +29,7 @@ public class GUI implements KeyListener, Runnable {
 	double _windResistance = 3;
 	Random _rand;
 	int _groupCounter = 1;
-
+ 
 	Rectangle _r1, _r2, _r3, _r4;
 	TextBox _t1, _t2, _t3, _t4;
 
