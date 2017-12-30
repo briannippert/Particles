@@ -5,12 +5,12 @@ import java.util.Random;
 import wheelsunh.users.Ellipse;
 
 /**
- * Particle Class
+ * RoundParticle Class
  * 
  * @author Brian
  *
  */
-public class Particle extends Ellipse {
+public class RoundParticle extends Ellipse  implements FlowingParticle{
 	int _xVelocity;
 	int _yVelocity;
 	boolean _onGround = false;
@@ -25,7 +25,7 @@ public class Particle extends Ellipse {
 	 * @param location
 	 *            point
 	 */
-	public Particle(int xVelocity, int yVelocity, Point location) {
+	public RoundParticle(int xVelocity, int yVelocity, Point location) {
 		_xVelocity = xVelocity;
 		_yVelocity = yVelocity;
 		Random r1 = new Random();

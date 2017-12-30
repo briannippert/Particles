@@ -1,6 +1,8 @@
+import java.awt.Point;
 
 public interface RidgedBody {
 
-	public void contains();
+	public boolean contains(Point point);
+	
 	
 }

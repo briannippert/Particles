@@ -24,7 +24,7 @@ import wheelsunh.users.TextBox;
  */
 public class GUI implements KeyListener, Runnable {
 	Frame _f1;
-	public List<Particle> _particles1, _particles2, _particles3, _particles4;
+	public List<RoundParticle> _particles1, _particles2, _particles3, _particles4;
 	double _gravity = 2;
 	double _windResistance = 3;
 	Random _rand;
@@ -34,7 +34,7 @@ public class GUI implements KeyListener, Runnable {
 	TextBox _t1, _t2, _t3, _t4;
 
 	static int _MAXPARTICLES = 100;
-	static int _EMITERRATE = 100;
+	static int _EMITERRATE = 10;
 
 	/**
 	 * Constructor for GUI Class
@@ -123,28 +123,28 @@ public class GUI implements KeyListener, Runnable {
 					switch (_groupCounter) {
 					case 1:
 						synchronized (_particles1) {
-							_particles1.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							_particles1.add(new RoundParticle((int) velx, (int) vely, new Point(mouseX, mouseY)));
 							_groupCounter = 2;
 							continue;
 						}
 
 					case 2:
 						synchronized (_particles2) {
-							_particles2.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							_particles2.add(new RoundParticle((int) velx, (int) vely, new Point(mouseX, mouseY)));
 							_groupCounter = 3;
 							continue;
 						}
 
 					case 3:
 						synchronized (_particles3) {
-							_particles3.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							_particles3.add(new RoundParticle((int) velx, (int) vely, new Point(mouseX, mouseY)));
 							_groupCounter = 4;
 							continue;
 						}
 
 					case 4:
 						synchronized (_particles4) {
-							_particles4.add(new Particle((int) velx, (int) vely, new Point(mouseX, mouseY)));
+							_particles4.add(new RoundParticle((int) velx, (int) vely, new Point(mouseX, mouseY)));
 							_groupCounter = 1;
 							continue;
 						}
@@ -152,28 +152,28 @@ public class GUI implements KeyListener, Runnable {
 					}
 					// synchronized (_particles1) {
 					// if (_r1.contains(mouse)) {
-					// _particles1.add(new Particle((int) velx, (int) vely, new
+					// _particles1.add(new RoundParticle((int) velx, (int) vely, new
 					// Point(mouseX, mouseY)));
 					// continue;
 					// }
 					// }
 					// synchronized (_particles2) {
 					// if (_r2.contains(mouse)) {
-					// _particles2.add(new Particle((int) velx, (int) vely, new
+					// _particles2.add(new RoundParticle((int) velx, (int) vely, new
 					// Point(mouseX, mouseY)));
 					// continue;
 					// }
 					// }
 					// synchronized (_particles3) {
 					// if (_r3.contains(mouse)) {
-					// _particles3.add(new Particle((int) velx, (int) vely, new
+					// _particles3.add(new RoundParticle((int) velx, (int) vely, new
 					// Point(mouseX, mouseY)));
 					// continue;
 					// }
 					// }
 					// synchronized (_particles4) {
 					// if (_r4.contains(mouse)) {
-					// _particles4.add(new Particle((int) velx, (int) vely, new
+					// _particles4.add(new RoundParticle((int) velx, (int) vely, new
 					// Point(mouseX, mouseY)));
 					// continue;
 					// }
@@ -224,7 +224,7 @@ public class GUI implements KeyListener, Runnable {
 			synchronized (particles) {
 				Iterator i = particles.iterator();
 				while (i.hasNext()) {
-					Particle p = (Particle) i.next();
+					RoundParticle p = (RoundParticle) i.next();
 					Point nextPos = p.nextLocation();
 					if (_r1.contains(nextPos) && ListNum != 1) {
 						_particles1.add(p);
@@ -275,7 +275,7 @@ public class GUI implements KeyListener, Runnable {
 		synchronized (particles) {
 			Iterator i = particles.iterator();
 			while (i.hasNext()) {
-				Particle p = (Particle) i.next();
+				RoundParticle p = (RoundParticle) i.next();
 				if (p.getXLocation() <= 5 || p.getXLocation() >= Frame.getWidth() - 5) {
 					p.setXVelocity(-p.getVelocity().x);
 				}
