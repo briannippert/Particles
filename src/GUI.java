@@ -288,7 +288,7 @@ public class GUI implements KeyListener, Runnable {
 				if (p.getYLocation() >= Frame.getHeight() + 20) {
 					p = null;
 					i.remove();
-					// p.setOnGround(true);
+					 p.setOnGround(true);
 				}
 			}
 		}
