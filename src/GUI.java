@@ -22,7 +22,7 @@ import wheelsunh.users.TextBox;
  * @author Brian
  *
  */
-public class GUI implements KeyListener, Runnable {
+public class GUI implements KeyListener {
 	Frame _f1;
 	public List<RoundParticle> _particles1, _particles2, _particles3, _particles4;
 	double _gravity = 2;
@@ -225,6 +225,10 @@ public class GUI implements KeyListener, Runnable {
 
 	}
 
+	/**
+	 * Moves all particles in list num.
+	 * @param num
+	 */
 	public synchronized void moveParticles(int num) {
 		List particles = null;
 		switch (num) {
@@ -254,49 +258,13 @@ public class GUI implements KeyListener, Runnable {
 					p.setYVelocity(-p.getVelocity().y);
 				}
 				p.changeYVelocity((int) (_gravity));
-
 				p.move();
 				if (p.getYLocation() >= Frame.getHeight() + 20) {
 					p = null;
 					i.remove();
-					// p.setOnGround(true);
 				}
 			}
 		}
-	}
-
-	/**
-	 * Runing method for the thread
-	 */
-	@Override
-	public void run() {
-
-		while (true) {
-			try {
-				Thread.sleep(16);
-				//
-				// assignParticleGroups(1);
-				// assignParticleGroups(2);
-				// assignParticleGroups(3);
-				// assignParticleGroups(4);
-				// moveParticles(1);
-				// moveParticles(2);
-				// moveParticles(3);
-				// moveParticles(4);
-				displayBallCount();
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-
-		}
-	}
-
-	/**
-	 * Displays the count of the number of particles in the boxes.
-	 */
-	public void displayBallCount() {
-
 	}
 
 	/**
@@ -320,11 +288,9 @@ public class GUI implements KeyListener, Runnable {
 		public void run() {
 			while (true) {
 				try {
-					Thread.sleep(16);
-					// assignParticleGroups(listNum);
+					Thread.sleep(20);
 					moveParticles(listNum);
 				} catch (Exception e) {
-					// TODO Auto-generated catch blocks
 					e.printStackTrace();
 				}
 			}
@@ -344,7 +310,7 @@ public class GUI implements KeyListener, Runnable {
 		public void run() {
 			try {
 				while (true) {
-					Thread.sleep(5);
+					Thread.sleep(30);
 					_t1.setText(String.valueOf(_particles1.size()));
 					_t2.setText(String.valueOf(_particles2.size()));
 					_t3.setText(String.valueOf(_particles3.size()));
