@@ -33,7 +33,7 @@ public class GUI implements KeyListener, Runnable {
 	Rectangle _r1, _r2, _r3, _r4;
 	TextBox _t1, _t2, _t3, _t4;
 
-	static int _MAXPARTICLES = 500;
+	static int _MAXPARTICLES = 100;
 	static int _EMITERRATE = 100;
 
 	/**
