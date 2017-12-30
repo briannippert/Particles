@@ -150,35 +150,6 @@ public class GUI implements KeyListener, Runnable {
 						}
 
 					}
-					// synchronized (_particles1) {
-					// if (_r1.contains(mouse)) {
-					// _particles1.add(new RoundParticle((int) velx, (int) vely, new
-					// Point(mouseX, mouseY)));
-					// continue;
-					// }
-					// }
-					// synchronized (_particles2) {
-					// if (_r2.contains(mouse)) {
-					// _particles2.add(new RoundParticle((int) velx, (int) vely, new
-					// Point(mouseX, mouseY)));
-					// continue;
-					// }
-					// }
-					// synchronized (_particles3) {
-					// if (_r3.contains(mouse)) {
-					// _particles3.add(new RoundParticle((int) velx, (int) vely, new
-					// Point(mouseX, mouseY)));
-					// continue;
-					// }
-					// }
-					// synchronized (_particles4) {
-					// if (_r4.contains(mouse)) {
-					// _particles4.add(new RoundParticle((int) velx, (int) vely, new
-					// Point(mouseX, mouseY)));
-					// continue;
-					// }
-					// }
-
 				}
 
 			} catch (Exception ex) {
@@ -288,7 +259,7 @@ public class GUI implements KeyListener, Runnable {
 				if (p.getYLocation() >= Frame.getHeight() + 20) {
 					p = null;
 					i.remove();
-					 p.setOnGround(true);
+					// p.setOnGround(true);
 				}
 			}
 		}
