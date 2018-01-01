@@ -1,8 +1,9 @@
-/RidgedBody.class
 /FlowingParticle.class
-<<<<<<< HEAD
-/RoundParticle.class
-=======
-/RigidBox.class
+/GUI$BallCounter.class
+/GUI$ParticleWorker.class
+/GUI.class
+/RidgedBody.class
 /RigidBody.class
->>>>>>> 480b0e1dc4fd4b10b5095a0d745869d642137a3c
+/RigidBox.class
+/RoundParticle.class
+/wheelsunh.jar
