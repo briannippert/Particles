@@ -29,12 +29,13 @@ public class GUI implements KeyListener {
 	double _windResistance = 3;
 	Random _rand;
 	int _groupCounter = 1;
- 
+
 	Rectangle _r1, _r2, _r3, _r4;
 	TextBox _t1, _t2, _t3, _t4;
+	Cube c1;
 
 	static int _MAXPARTICLES = 100;
-	static int _EMITERRATE = 10;
+	static int _EMITERRATE = 1;
 
 	/**
 	 * Constructor for GUI Class
@@ -77,6 +78,8 @@ public class GUI implements KeyListener {
 		_r4.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
 		_r4.setFillColor(new Color(0, 0, 0, 0));
 		_r4.setFrameColor(Color.BLUE);
+		c1 = new Cube(300, 300, 45);
+		c1.setSize(50, 50);
 		Thread t1, t2, t3, t4, t5;
 		t1 = new Thread(new ParticleWorker(1));
 		t2 = new Thread(new ParticleWorker(2));
@@ -227,6 +230,7 @@ public class GUI implements KeyListener {
 
 	/**
 	 * Moves all particles in list num.
+	 * 
 	 * @param num
 	 */
 	public synchronized void moveParticles(int num) {
@@ -251,6 +255,11 @@ public class GUI implements KeyListener {
 			Iterator i = particles.iterator();
 			while (i.hasNext()) {
 				RoundParticle p = (RoundParticle) i.next();
+				if (c1.contains(p.getLocation()) == true) {
+					p.setXVelocity(-p.getVelocity().x);
+					p.setYVelocity(-p.getVelocity().y);
+					continue;
+				}
 				if (p.getXLocation() <= 5 || p.getXLocation() >= Frame.getWidth() - 5) {
 					p.setXVelocity(-p.getVelocity().x);
 				}
