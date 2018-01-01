@@ -34,8 +34,8 @@ public class GUI implements KeyListener {
 	TextBox _t1, _t2, _t3, _t4;
 	Cube c1;
 
-	static int _MAXPARTICLES = 100;
-	static int _EMITERRATE = 1;
+	static int _MAXPARTICLES = 1000;
+	static int _EMITERRATE = 50;
 
 	/**
 	 * Constructor for GUI Class
@@ -107,7 +107,7 @@ public class GUI implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyChar() == ' ') {
-			if (_particles1.size() >= _MAXPARTICLES) {
+			if (_particles1.size() + _particles2.size() + _particles3.size() + _particles4.size()>= _MAXPARTICLES) {
 				return;
 			}
 			try {
