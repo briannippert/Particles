@@ -34,8 +34,8 @@ public class GUI implements KeyListener {
 	TextBox _t1, _t2, _t3, _t4;
 	Cube c1;
 
-	static int _MAXPARTICLES = 100;
-	static int _EMITERRATE = 1;
+	static int _MAXPARTICLES = 1000;
+	static int _EMITERRATE = 50;
 
 	/**
 	 * Constructor for GUI Class
