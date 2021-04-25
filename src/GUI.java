@@ -35,7 +35,7 @@ public class GUI implements KeyListener {
 	Cube c1;
 
 	static int _MAXPARTICLES = 1000;
-	static int _EMITERRATE = 50;
+	static int _EMITERRATE = 5;
 
 	/**
 	 * Constructor for GUI Class
@@ -48,14 +48,14 @@ public class GUI implements KeyListener {
 		_particles2 = Collections.synchronizedList(new ArrayList());
 		_particles3 = Collections.synchronizedList(new ArrayList());
 		_particles4 = Collections.synchronizedList(new ArrayList());
-		_t1 = new TextBox();
-		_t1.setLocation(0, 0);
-		_t2 = new TextBox();
-		_t2.setLocation(Frame.getWidth() - _t2.getWidth(), 0);
-		_t3 = new TextBox();
-		_t3.setLocation(0, Frame.getHeight() - _t2.getHeight());
-		_t4 = new TextBox();
-		_t4.setLocation(Frame.getWidth() - _t2.getWidth(), Frame.getHeight() - _t2.getHeight());
+//		_t1 = new TextBox();
+//		_t1.setLocation(0, 0);
+//		_t2 = new TextBox();
+//		_t2.setLocation(Frame.getWidth() - _t2.getWidth(), 0);
+//		_t3 = new TextBox();
+//		_t3.setLocation(0, Frame.getHeight() - _t2.getHeight());
+//		_t4 = new TextBox();
+//		_t4.setLocation(Frame.getWidth() - _t2.getWidth(), Frame.getHeight() - _t2.getHeight());
 		_f1.addKeyListener(this);
 		// this.run();
 		_r1 = new Rectangle();
@@ -289,7 +289,7 @@ public class GUI implements KeyListener {
 	// Worker thread for particle multi threading
 	public class ParticleWorker implements Runnable {
 		int listNum;
-
+		long prevTime =System.currentTimeMillis() ;
 		public ParticleWorker(Object parameter) {
 			listNum = (int) parameter;
 		}
@@ -297,8 +297,10 @@ public class GUI implements KeyListener {
 		public void run() {
 			while (true) {
 				try {
-					Thread.sleep(20);
-					moveParticles(listNum);
+					if(System.currentTimeMillis() - prevTime >= 16){
+						moveParticles(listNum);
+						prevTime = System.currentTimeMillis();
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -319,11 +321,11 @@ public class GUI implements KeyListener {
 		public void run() {
 			try {
 				while (true) {
-					Thread.sleep(30);
-					_t1.setText(String.valueOf(_particles1.size()));
-					_t2.setText(String.valueOf(_particles2.size()));
-					_t3.setText(String.valueOf(_particles3.size()));
-					_t4.setText(String.valueOf(_particles4.size()));
+//					Thread.sleep(30);
+//					_t1.setText(String.valueOf(_particles1.size()));
+//					_t2.setText(String.valueOf(_particles2.size()));
+//					_t3.setText(String.valueOf(_particles3.size()));
+//					_t4.setText(String.valueOf(_particles4.size()));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
