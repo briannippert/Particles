@@ -3,7 +3,7 @@ import java.awt.Point;
 import wheelsunh.users.Frame;
 import wheelsunh.users.Rectangle;
 
-public class Cube extends Rectangle implements RidgedBody {
+public class Cube extends Rectangle implements RigidBody {
 
 	public Cube(int xLocation, int yLocation, int angle) {
 		this.setSize(20, 20);

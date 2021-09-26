@@ -25,6 +25,7 @@ import wheelsunh.users.TextBox;
 public class GUI implements KeyListener {
 	Frame _f1;
 	public List<RoundParticle> _particles1, _particles2, _particles3, _particles4;
+	public List<RigidBody> bodies;
 	double _gravity = 2;
 	double _windResistance = 3;
 	Random _rand;
@@ -42,44 +43,16 @@ public class GUI implements KeyListener {
 	 */
 	@SuppressWarnings("unchecked")
 	public GUI() {
-		_f1 = new Frame(1000, 1000);
+		_f1 = new Frame(800, 800);
 		_rand = new Random();
 		_particles1 = Collections.synchronizedList(new ArrayList());
 		_particles2 = Collections.synchronizedList(new ArrayList());
 		_particles3 = Collections.synchronizedList(new ArrayList());
 		_particles4 = Collections.synchronizedList(new ArrayList());
-//		_t1 = new TextBox();
-//		_t1.setLocation(0, 0);
-//		_t2 = new TextBox();
-//		_t2.setLocation(Frame.getWidth() - _t2.getWidth(), 0);
-//		_t3 = new TextBox();
-//		_t3.setLocation(0, Frame.getHeight() - _t2.getHeight());
-//		_t4 = new TextBox();
-//		_t4.setLocation(Frame.getWidth() - _t2.getWidth(), Frame.getHeight() - _t2.getHeight());
 		_f1.addKeyListener(this);
 		// this.run();
-		_r1 = new Rectangle();
-		_r1.setLocation(0, 0);
-		_r1.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		_r1.setFillColor(new Color(0, 0, 0, 0));
-		_r1.setFrameColor(Color.BLACK);
-		_r2 = new Rectangle();
-		_r2.setLocation(Frame.getWidth() / 2, 0);
-		_r2.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		_r2.setFillColor(new Color(0, 0, 0, 0));
-		_r2.setFrameColor(Color.RED);
-		_r3 = new Rectangle();
-		_r3.setLocation(0, Frame.getHeight() / 2);
-		_r3.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		_r3.setFillColor(new Color(0, 0, 0, 0));
-		_r3.setFrameColor(Color.GREEN);
-		_r4 = new Rectangle();
-		_r4.setLocation(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		_r4.setSize(Frame.getWidth() / 2, Frame.getHeight() / 2);
-		_r4.setFillColor(new Color(0, 0, 0, 0));
-		_r4.setFrameColor(Color.BLUE);
 		c1 = new Cube(300, 300, 45);
-		c1.setSize(50, 50);
+		c1.setSize(20, 200);
 		Thread t1, t2, t3, t4, t5;
 		t1 = new Thread(new ParticleWorker(1));
 		t2 = new Thread(new ParticleWorker(2));
@@ -256,8 +229,9 @@ public class GUI implements KeyListener {
 			while (i.hasNext()) {
 				RoundParticle p = (RoundParticle) i.next();
 				if (c1.contains(p.getLocation()) == true) {
-					p.setXVelocity(-p.getVelocity().x);
-					p.setYVelocity(-p.getVelocity().y);
+					p.setXVelocity((int)(-p.getVelocity().x*.9));
+					p.setYVelocity((int)(-p.getVelocity().y*.9));
+					p.move();
 					continue;
 				}
 				if (p.getXLocation() <= 5 || p.getXLocation() >= Frame.getWidth() - 5) {
